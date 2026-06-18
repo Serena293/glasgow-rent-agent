@@ -3,7 +3,7 @@
 This project is configured for Render with:
 
 - one Cron Job: `glasgow-rent-agent`
-- one Render Postgres database: `glasgow-rent-agent-db`
+- one free Render Postgres database: `glasgow-rent-agent-db`
 - one secret env var: `GOOGLE_TOKEN_JSON`
 
 The cron schedule is:
@@ -13,6 +13,8 @@ The cron schedule is:
 ```
 
 Render cron schedules are UTC. This means the job runs around morning and evening UK time, with a one-hour shift around daylight saving time.
+
+The database uses Render's free Postgres plan, which is limited to 30 days. That is intentional for this short house search.
 
 ## Before Deploy
 
@@ -68,4 +70,3 @@ Scheduled mode selected: morning
 Checking openrent...
 ...
 ```
-

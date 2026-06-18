@@ -24,5 +24,4 @@ databases:
     databaseName: rent_agent
     user: rent_agent
     region: frankfurt
-    plan: basic-256mb
-
+    plan: free
