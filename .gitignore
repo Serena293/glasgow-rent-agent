@@ -1,0 +1,17 @@
+.env
+.secrets/
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.db
+.pytest_cache/
+htmlcov/
+*.egg-info/
+build/
+dist/
+work/*.html
+work/*.json
+credentials.json
+token.json
+gmail_token.json

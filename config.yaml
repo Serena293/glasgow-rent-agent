@@ -1,0 +1,169 @@
+app:
+  timezone: Europe/London
+  database_url: sqlite:///work/house_agent.sqlite3
+
+email:
+  provider: gmail_api
+  recipient: serenaferraro21@gmail.com
+  sender_name: Glasgow Rent Agent
+  subject_prefix: "Glasgow rent alerts"
+  credentials_file: credentials.json
+  token_file: .secrets/gmail_token.json
+
+criteria:
+  city: Glasgow
+  rent_type: rent
+  max_price_pcm: 900
+  min_bedrooms: 1
+  property_kinds:
+    - flat
+    - apartment
+  furnishing:
+    accepted:
+      - furnished
+      - part-furnished
+    reject_unknown: true
+  allowed_locations:
+    postcodes:
+      - G11
+      - G3 8
+      - G41
+    area_terms:
+      - Partick
+      - Finnieston
+      - Shawlands
+      - Strathbungo
+  exclude_keywords:
+    - student only
+    - students only
+    - student-only
+    - sublet
+    - sub-let
+    - short let
+    - short-let
+    - holiday let
+    - room only
+    - single room
+    - double room
+    - house share
+    - flat share
+    - flatshare
+    - shared flat
+    - shared apartment
+    - hmo room
+    - lodger
+    - unfurnished
+
+runtime:
+  baseline_on_empty_db: false
+  request_timeout_seconds: 20
+  user_agent: "Mozilla/5.0 (compatible; GlasgowRentAgent/0.1; local personal search)"
+  fetch_detail_pages: true
+  max_search_results_per_search: 25
+  max_detail_pages_per_search: 8
+
+sources:
+  openrent:
+    enabled: true
+    adapter: generic
+    priority: 10
+    searches:
+      - name: openrent_g11
+        zone_hint: G11
+        url: "https://www.openrent.co.uk/properties-to-rent/g11-glasgow?term=G11%2C%20Glasgow&prices_max=900&bedrooms_min=1"
+      - name: openrent_g3_8
+        zone_hint: "G3 8"
+        url: "https://www.openrent.co.uk/properties-to-rent/g3-8-glasgow?term=G3%208%2C%20Glasgow&prices_max=900&bedrooms_min=1"
+      - name: openrent_g41
+        zone_hint: G41
+        url: "https://www.openrent.co.uk/properties-to-rent/g41-glasgow?term=G41%2C%20Glasgow&prices_max=900&bedrooms_min=1"
+
+  citylets:
+    enabled: true
+    adapter: generic
+    priority: 20
+    searches:
+      - name: citylets_g11
+        zone_hint: G11
+        url: "https://www.citylets.co.uk/flats-rent-glasgow/g11/?maxrent=900"
+      - name: citylets_g3_8
+        zone_hint: G3
+        url: "https://www.citylets.co.uk/flats-rent-glasgow/g3/?maxrent=900"
+      - name: citylets_g41
+        zone_hint: G41
+        url: "https://www.citylets.co.uk/flats-rent-glasgow/g41/?maxrent=900"
+
+  rightmove:
+    enabled: true
+    adapter: generic
+    priority: 30
+    searches:
+      - name: rightmove_g11
+        zone_hint: G11
+        url: "https://www.rightmove.co.uk/property-to-rent/find.html?searchLocation=G11&useLocationIdentifier=false&locationIdentifier=&radius=0.0&minBedrooms=1&maxPrice=900&propertyTypes=flat&includeLetAgreed=false&dontShow=houseShare%2Cstudent%2Cretirement&furnishTypes=furnished%2CpartFurnished"
+      - name: rightmove_g3_8
+        zone_hint: "G3 8"
+        url: "https://www.rightmove.co.uk/property-to-rent/find.html?searchLocation=G3%208&useLocationIdentifier=false&locationIdentifier=&radius=0.0&minBedrooms=1&maxPrice=900&propertyTypes=flat&includeLetAgreed=false&dontShow=houseShare%2Cstudent%2Cretirement&furnishTypes=furnished%2CpartFurnished"
+      - name: rightmove_g41
+        zone_hint: G41
+        url: "https://www.rightmove.co.uk/property-to-rent/find.html?searchLocation=G41&useLocationIdentifier=false&locationIdentifier=&radius=0.0&minBedrooms=1&maxPrice=900&propertyTypes=flat&includeLetAgreed=false&dontShow=houseShare%2Cstudent%2Cretirement&furnishTypes=furnished%2CpartFurnished"
+
+  zoopla:
+    enabled: true
+    adapter: generic
+    priority: 40
+    searches:
+      - name: zoopla_g11
+        zone_hint: G11
+        url: "https://www.zoopla.co.uk/to-rent/property/g11/?beds_min=1&price_frequency=per_month&price_max=900&property_sub_type=flats"
+      - name: zoopla_g3_8
+        zone_hint: "G3 8"
+        url: "https://www.zoopla.co.uk/to-rent/property/g3-8/?beds_min=1&price_frequency=per_month&price_max=900&property_sub_type=flats"
+      - name: zoopla_g41
+        zone_hint: G41
+        url: "https://www.zoopla.co.uk/to-rent/property/g41/?beds_min=1&price_frequency=per_month&price_max=900&property_sub_type=flats"
+
+  onthemarket:
+    enabled: true
+    adapter: generic
+    priority: 50
+    searches:
+      - name: onthemarket_g11
+        zone_hint: G11
+        url: "https://www.onthemarket.com/to-rent/flats-apartments/g11/?max-price=900&min-bedrooms=1"
+      - name: onthemarket_g3_8
+        zone_hint: "G3 8"
+        url: "https://www.onthemarket.com/to-rent/flats-apartments/g3-8/?max-price=900&min-bedrooms=1"
+      - name: onthemarket_g41
+        zone_hint: G41
+        url: "https://www.onthemarket.com/to-rent/flats-apartments/g41/?max-price=900&min-bedrooms=1"
+
+  lettingweb:
+    enabled: true
+    adapter: generic
+    priority: 60
+    searches:
+      - name: lettingweb_g11
+        zone_hint: G11
+        url: "https://www.lettingweb.com/flats-to-rent/glasgow/g11"
+      - name: lettingweb_g3_8
+        zone_hint: "G3 8"
+        url: "https://www.lettingweb.com/flats-to-rent/glasgow/g3-8"
+      - name: lettingweb_g41
+        zone_hint: G41
+        url: "https://www.lettingweb.com/flats-to-rent/glasgow/g41"
+
+  s1homes:
+    enabled: true
+    adapter: generic
+    priority: 70
+    searches:
+      - name: s1homes_g11
+        zone_hint: G11
+        url: "https://www.s1homes.com/Flats-for-rent/Glasgow/G11/"
+      - name: s1homes_g3_8
+        zone_hint: G3
+        url: "https://www.s1homes.com/Flats-for-rent/Glasgow/G3/"
+      - name: s1homes_g41
+        zone_hint: G41
+        url: "https://www.s1homes.com/Flats-for-rent/Glasgow/G41/"

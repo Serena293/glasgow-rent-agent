@@ -1,0 +1,28 @@
+services:
+  - type: cron
+    name: glasgow-rent-agent
+    runtime: python
+    region: frankfurt
+    plan: starter
+    schedule: "30 7,17 * * *"
+    buildCommand: "pip install -e ."
+    startCommand: "house-agent scheduled"
+    envVars:
+      - key: HOUSE_AGENT_CONFIG
+        value: config.yaml
+      - key: HOUSE_AGENT_BASELINE_ON_EMPTY_DB
+        value: "true"
+      - key: GOOGLE_TOKEN_JSON
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: glasgow-rent-agent-db
+          property: connectionString
+
+databases:
+  - name: glasgow-rent-agent-db
+    databaseName: rent_agent
+    user: rent_agent
+    region: frankfurt
+    plan: basic-256mb
+
